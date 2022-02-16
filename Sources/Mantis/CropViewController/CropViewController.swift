@@ -109,6 +109,7 @@ public class CropViewController: UIViewController {
     }
     
     fileprivate func createCropToolbar() {
+        cropToolbar.isHidden = !config.showCropToolbar
         cropToolbar.cropToolbarDelegate = self
         
         switch config.presetFixedRatioType {
