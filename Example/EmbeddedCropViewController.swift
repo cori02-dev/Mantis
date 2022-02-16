@@ -10,7 +10,7 @@ import UIKit
 import Mantis
 
 class EmbeddedCropViewController: UIViewController {
- 
+    
     var image: UIImage?
     var cropViewController: CropViewController?
     
