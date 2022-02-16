@@ -775,3 +775,21 @@ extension CropView {
         }
     }
 }
+
+
+// MARK: - public API
+extension CropView {
+    func getCurrentTransformation() -> Transformation {
+        let transformation = Transformation(
+            offset: scrollView.contentOffset,
+            rotation: getTotalRadians(),
+            scale: scrollView.zoomScale,
+            manualZoomed: manualZoomed,
+            intialMaskFrame: getInitialCropBoxRect(),
+            maskFrame: gridOverlayView.frame,
+            scrollBounds: scrollView.bounds
+        )
+        return transformation
+    }
+}
+

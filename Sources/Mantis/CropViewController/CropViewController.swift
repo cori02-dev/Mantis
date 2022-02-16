@@ -553,6 +553,10 @@ extension CropViewController: CropToolbarDelegate {
     public func didSelectAlterCropper90Degree() {
         handleAlterCropper90Degree()
     }
+    
+    public func getCurrentTransformation() -> Transformation {
+        return cropView.getCurrentTransformation()
+    }
 }
 
 // API

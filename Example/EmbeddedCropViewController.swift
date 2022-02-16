@@ -43,9 +43,10 @@ class EmbeddedCropViewController: UIViewController {
             cropViewController.delegate = self
             
             var config = Mantis.Config()
-            config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1/2)
-            config.showCropToolbar = false
+            config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1/1)
+//            config.showCropToolbar = false
             config.showRotationDial = false
+            config.cropVisualEffectType = .light
             cropViewController.config = config
             
             self.cropViewController = cropViewController
@@ -67,6 +68,7 @@ extension EmbeddedCropViewController: CropViewControllerDelegate {
                                    cropInfo: CropInfo) {
         self.dismiss(animated: true)
         self.didGetCroppedImage?(cropped)
+//        print(cropViewController.getCurrentTransformation())
     }
     
     func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) {
