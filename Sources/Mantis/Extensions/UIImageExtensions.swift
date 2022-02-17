@@ -114,7 +114,7 @@ public extension UIImage {
             return nil
         }
         
-        UIImage(cgImage: fixedImage)
+        return UIImage(cgImage: fixedImage)
         
 //        var transform = CGAffineTransform.identity
 //        transform = transform.translatedBy(x: cropInfo.translation.x, y: cropInfo.translation.y)
