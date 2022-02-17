@@ -779,7 +779,7 @@ extension CropView {
 
 // MARK: - public API
 extension CropView {
-    func getCurrentTransformation() -> Transformation {
+    func getCurrentTransformationInfo() -> (Transformation, CropInfo) {
         let transformation = Transformation(
             offset: scrollView.contentOffset,
             rotation: getTotalRadians(),
@@ -789,7 +789,7 @@ extension CropView {
             maskFrame: gridOverlayView.frame,
             scrollBounds: scrollView.bounds
         )
-        return transformation
+        return (transformation, getCropInfo())
     }
 }
 
