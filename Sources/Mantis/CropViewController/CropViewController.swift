@@ -554,8 +554,8 @@ extension CropViewController: CropToolbarDelegate {
         handleAlterCropper90Degree()
     }
     
-    public func getCurrentTransformation() -> Transformation {
-        return cropView.getCurrentTransformation()
+    public func getCurrentTransformation() -> (Transformation, CropInfo) {
+        return cropView.getCurrentTransformationInfo()
     }
 }
 
