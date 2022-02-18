@@ -34,7 +34,7 @@ protocol CropViewDelegate: AnyObject {
 let cropViewMinimumBoxSize: CGFloat = 42
 let minimumAspectRatio: CGFloat = 0
 let hotAreaUnit: CGFloat = 32
-let cropViewPadding:CGFloat = 14.0
+var cropViewPadding:CGFloat = 14.0
 
 class CropView: UIView {
 
@@ -384,11 +384,24 @@ extension CropView {
             contentRect.origin.x = rect.origin.x + cropViewPadding
             contentRect.origin.y = rect.origin.y + cropViewPadding
             
-            contentRect.size.width = rect.width - 2 * cropViewPadding
-            contentRect.size.height = rect.height - 2 * cropViewPadding - angleDashboardHeight
+            if cropViewPadding > 0 {
+                contentRect.size.width = rect.width - 2 * cropViewPadding
+                contentRect.size.height = rect.height - 2 * cropViewPadding - angleDashboardHeight
+            } else {
+                contentRect.size.width = rect.width
+                contentRect.size.height = rect.height  - angleDashboardHeight
+            }
         } else if Orientation.isLandscape {
-            contentRect.size.width = rect.width - 2 * cropViewPadding - angleDashboardHeight
-            contentRect.size.height = rect.height - 2 * cropViewPadding
+            if cropViewPadding > 0 {
+                contentRect.size.width = rect.width - 2 * cropViewPadding - angleDashboardHeight
+                contentRect.size.height = rect.height - 2 * cropViewPadding
+            } else {
+                contentRect.size.width = rect.width  - angleDashboardHeight
+                contentRect.size.height = rect.height
+            }
+            
+//            contentRect.size.width = rect.width - 2 * cropViewPadding - angleDashboardHeight
+//            contentRect.size.height = rect.height - 2 * cropViewPadding
             
             contentRect.origin.y = rect.origin.y + cropViewPadding
             if Orientation.isLandscapeLeft {
@@ -799,6 +812,7 @@ extension CropView {
             self?.delegate?.cropViewDidEndResize(self!)
             self?.viewModel.setBetweenOperationStatus()
             self?.scrollView.updateMinZoomScale()
+            
             completion()
         }
     }

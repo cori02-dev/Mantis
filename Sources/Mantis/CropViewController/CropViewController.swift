@@ -254,6 +254,7 @@ public class CropViewController: UIViewController {
         cropView.clipsToBounds = true
         cropView.cropShapeType = config.cropShapeType
         cropView.cropVisualEffectType = config.cropVisualEffectType
+        cropViewPadding = config.cropViewPadding
         
         if case .alwaysUsingOnePresetFixedRatio = config.presetFixedRatioType {
             cropView.forceFixedRatio = true
@@ -582,5 +583,23 @@ extension CropViewController {
     
     public func process(_ image: UIImage) -> UIImage? {
         return cropView.crop(image).croppedImage
+    }
+    
+    public func changeTranformation(info: Transformation) {
+        config.presetTransformationType = .presetInfo(info: info)
+        processPresetTransformation() { [weak self] transform in
+            guard let self = self else { return }
+            if case .alwaysUsingOnePresetFixedRatio(let ratio) = self.config.presetFixedRatioType {
+                self.cropView.aspectRatioLockEnabled = true
+                self.cropToolbar.handleFixedRatioSetted(ratio: ratio)
+                
+                if ratio == 0 {
+                    self.cropView.viewModel.aspectRatio = transform.maskFrame.width / transform.maskFrame.height
+                } else {
+                    self.cropView.viewModel.aspectRatio = CGFloat(ratio)
+                    self.cropView.setFixedRatioCropBox(zoom: false, cropBox: cropView.viewModel.cropBoxFrame)
+                }
+            }
+        }
     }
 }

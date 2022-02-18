@@ -47,6 +47,19 @@ class EmbeddedCropViewController: UIViewController {
             config.showCropToolbar = false
             config.showRotationDial = false
             config.cropVisualEffectType = .light
+            config.cropViewPadding = 4
+            
+            
+//            let transform = Transformation(offset: CGPoint(x: 281.3333333333333, y: 329.3333333333333),
+//                                           rotation: 0.0,
+//                                           scale: 3.077653316242954,
+//                                           manualZoomed: true,
+//                                           intialMaskFrame: CGRect(x: 74.33333333333331, y: 14.0, width: 241.33333333333337, height: 362.0),
+//                                           maskFrame: CGRect(x: 14.0, y: 14.0, width: 362.0, height: 362.0),
+//                                           scrollBounds: CGRect(x: 281.3333333333333, y: 329.3333333333333, width: 362.0, height: 362.0))
+//
+//            config.presetTransformationType = .presetInfo(info: transform)
+            
             cropViewController.config = config
             
             self.cropViewController = cropViewController
@@ -70,10 +83,7 @@ extension EmbeddedCropViewController: CropViewControllerDelegate {
 //        self.didGetCroppedImage?(cropped)
         
         print(cropViewController.getCurrentTransformation())
-        cropViewController.getPlease {
-            print("되랏")
-            print(cropViewController.getCurrentTransformation())
-        }
+        
     }
     
     func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) {
