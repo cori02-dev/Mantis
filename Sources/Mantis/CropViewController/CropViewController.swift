@@ -557,6 +557,12 @@ extension CropViewController: CropToolbarDelegate {
     public func getCurrentTransformation() -> (Transformation, CropInfo) {
         return cropView.getCurrentTransformationInfo()
     }
+    
+    public func getPlease(completion: @escaping ()->Void) {
+        cropView.getPlease {
+            completion()
+        }
+    }
 }
 
 // API

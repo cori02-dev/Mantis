@@ -114,22 +114,20 @@ public extension UIImage {
             return nil
         }
         
-        return UIImage(cgImage: fixedImage)
+        var transform = CGAffineTransform.identity
+        transform = transform.translatedBy(x: cropInfo.translation.x, y: cropInfo.translation.y)
+        transform = transform.rotated(by: cropInfo.rotation)
+        transform = transform.scaledBy(x: cropInfo.scale, y: cropInfo.scale)
         
-//        var transform = CGAffineTransform.identity
-//        transform = transform.translatedBy(x: cropInfo.translation.x, y: cropInfo.translation.y)
-//        transform = transform.rotated(by: cropInfo.rotation)
-//        transform = transform.scaledBy(x: cropInfo.scale, y: cropInfo.scale)
-//
-//        guard let imageRef = fixedImage.transformedImage(transform,
-//                                                         zoomScale: cropInfo.scale,
-//                                                         sourceSize: self.size,
-//                                                         cropSize: cropInfo.cropSize,
-//                                                         imageViewSize: cropInfo.imageViewSize) else {
-//                                                            return nil
-//        }
-//
-//        return UIImage(cgImage: imageRef)
+        guard let imageRef = fixedImage.transformedImage(transform,
+                                                         zoomScale: cropInfo.scale,
+                                                         sourceSize: self.size,
+                                                         cropSize: cropInfo.cropSize,
+                                                         imageViewSize: cropInfo.imageViewSize) else {
+                                                            return nil
+        }
+        
+        return UIImage(cgImage: imageRef)
     }
     
 }

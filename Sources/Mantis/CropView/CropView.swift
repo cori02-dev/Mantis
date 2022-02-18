@@ -791,5 +791,16 @@ extension CropView {
         )
         return (transformation, getCropInfo())
     }
+    
+    func getPlease(completion: @escaping ()->Void) {
+        gridOverlayView.handleEdgeUntouched()
+        let contentRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        adjustUIForNewCrop(contentRect: contentRect, animation: false) {[weak self] in
+            self?.delegate?.cropViewDidEndResize(self!)
+            self?.viewModel.setBetweenOperationStatus()
+            self?.scrollView.updateMinZoomScale()
+            completion()
+        }
+    }
 }
 

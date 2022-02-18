@@ -109,5 +109,6 @@ class CropScrollView: UIScrollView {
 
         frame = rect
         contentSize = rect.size
+        
     }
 }
