@@ -254,7 +254,6 @@ public class CropViewController: UIViewController {
         cropView.clipsToBounds = true
         cropView.cropShapeType = config.cropShapeType
         cropView.cropVisualEffectType = config.cropVisualEffectType
-        cropViewPadding = config.cropViewPadding
         
         if case .alwaysUsingOnePresetFixedRatio = config.presetFixedRatioType {
             cropView.forceFixedRatio = true

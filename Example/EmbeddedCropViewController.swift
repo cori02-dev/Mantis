@@ -47,7 +47,6 @@ class EmbeddedCropViewController: UIViewController {
             config.showCropToolbar = false
             config.showRotationDial = false
             config.cropVisualEffectType = .light
-            config.cropViewPadding = 4
             
             
 //            let transform = Transformation(offset: CGPoint(x: 281.3333333333333, y: 329.3333333333333),

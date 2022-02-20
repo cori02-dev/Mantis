@@ -177,7 +177,6 @@ public struct Config {
     public var presetFixedRatioType: PresetFixedRatioType = .canUseMultiplePresetFixedRatio()
     public var showRotationDial = true
     public var showCropToolbar = true
-    public var cropViewPadding: CGFloat = 14.0
     public var dialConfig = DialConfig()
     public var cropToolbarConfig = CropToolbarConfig()
     public private(set) var localizationConfig = Mantis.localizationConfig
