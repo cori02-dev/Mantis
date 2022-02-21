@@ -66,18 +66,18 @@ extension CropView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         
-        if viewModel.needCrop() {
-            gridOverlayView.handleEdgeUntouched()
-            let contentRect = getContentBounds()
-            adjustUIForNewCrop(contentRect: contentRect) {[weak self] in
-                self?.delegate?.cropViewDidEndResize(self!)
-                self?.viewModel.setBetweenOperationStatus()
-                self?.scrollView.updateMinZoomScale()
-            }
-        } else {
-            delegate?.cropViewDidEndResize(self)
-            viewModel.setBetweenOperationStatus()
-        }
+//        if viewModel.needCrop() {
+//            gridOverlayView.handleEdgeUntouched()
+//            let contentRect = getContentBounds()
+//            adjustUIForNewCrop(contentRect: contentRect) {[weak self] in
+//                self?.delegate?.cropViewDidEndResize(self!)
+//                self?.viewModel.setBetweenOperationStatus()
+//                self?.scrollView.updateMinZoomScale()
+//            }
+//        } else {
+//            delegate?.cropViewDidEndResize(self)
+//            viewModel.setBetweenOperationStatus()
+//        }
     }
 }
 
