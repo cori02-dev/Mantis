@@ -335,6 +335,41 @@ public class CropViewController: UIViewController {
         return newTransform
     }
     
+    public func getdongdong(byTransformInfo transformInfo: Transformation) -> Transformation {
+        let cropFrame = cropView.viewModel.cropOrignFrame
+        let contentBound = cropView.getContentBounds(cropViewPadding: 0.00000001)
+        
+        let adjustScale: CGFloat
+        var maskFrameWidth: CGFloat
+        var maskFrameHeight: CGFloat
+        
+        if ( transformInfo.maskFrame.height / transformInfo.maskFrame.width >= contentBound.height / contentBound.width ) {
+            maskFrameHeight = contentBound.height
+            maskFrameWidth = transformInfo.maskFrame.width / transformInfo.maskFrame.height * maskFrameHeight
+            adjustScale = maskFrameHeight / transformInfo.maskFrame.height
+        } else {
+            maskFrameWidth = contentBound.width
+            maskFrameHeight = transformInfo.maskFrame.height / transformInfo.maskFrame.width * maskFrameWidth
+            adjustScale = maskFrameWidth / transformInfo.maskFrame.width
+        }
+        
+        var newTransform = transformInfo
+        
+        newTransform.offset = CGPoint(x:transformInfo.offset.x * adjustScale,
+                                      y:transformInfo.offset.y * adjustScale)
+        
+        newTransform.maskFrame = CGRect(x: cropFrame.origin.x + (cropFrame.width - maskFrameWidth) / 2,
+                                        y: cropFrame.origin.y + (cropFrame.height - maskFrameHeight) / 2,
+                                        width: maskFrameWidth,
+                                        height: maskFrameHeight)
+        newTransform.scrollBounds = CGRect(x: transformInfo.scrollBounds.origin.x * adjustScale,
+                                           y: transformInfo.scrollBounds.origin.y * adjustScale,
+                                           width: transformInfo.scrollBounds.width * adjustScale,
+                                           height: transformInfo.scrollBounds.height * adjustScale)
+        
+        return newTransform
+    }
+    
     private func getTransformInfo(byNormalizedInfo normailizedInfo: CGRect) -> Transformation {
         let cropFrame = cropView.viewModel.cropBoxFrame
         

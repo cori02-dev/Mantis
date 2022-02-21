@@ -34,7 +34,7 @@ protocol CropViewDelegate: AnyObject {
 let cropViewMinimumBoxSize: CGFloat = 42
 let minimumAspectRatio: CGFloat = 0
 let hotAreaUnit: CGFloat = 32
-var cropViewPadding:CGFloat = 14.0
+var cropViewPadding:CGFloat = 0.00000000001
 
 class CropView: UIView {
 
@@ -376,7 +376,7 @@ extension CropView {
         return GeometryHelper.getInscribeRect(fromOutsideRect: outsideRect, andInsideRect: insideRect)
     }
     
-    func getContentBounds() -> CGRect {
+    func getContentBounds(cropViewPadding: CGFloat = 14.0) -> CGRect {
         let rect = self.bounds
         var contentRect = CGRect.zero
         

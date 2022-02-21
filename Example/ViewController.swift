@@ -237,9 +237,9 @@ class ViewController: UIViewController, CropViewControllerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let navigationController = segue.destination as? UINavigationController,
            let embeddedCropViewController = navigationController.viewControllers.first as? EmbeddedCropViewController {
-            embeddedCropViewController.image = image
+            embeddedCropViewController.image = UIImage(named: "zoomfor")
             embeddedCropViewController.didGetCroppedImage = {[weak self] image in
-                self?.croppedImageView.image = image
+                self?.croppedImageView.image = UIImage(named: "zoomfor")
                 self?.dismiss(animated: true)
             }
         }

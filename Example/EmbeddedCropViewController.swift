@@ -81,7 +81,10 @@ extension EmbeddedCropViewController: CropViewControllerDelegate {
 //        self.dismiss(animated: true)
 //        self.didGetCroppedImage?(cropped)
         
-        print(cropViewController.getCurrentTransformation())
+//        print(cropViewController.getCurrentTransformation())
+        cropViewController.getPlease {
+            print(cropViewController.getdongdong(byTransformInfo: transformation))
+        }
         
     }
     
