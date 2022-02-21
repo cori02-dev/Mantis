@@ -186,6 +186,7 @@ public class CropViewController: UIViewController {
             initialLayout = true
             view.layoutIfNeeded()
             cropView.adaptForCropBox()
+            changeTranformation()
         }
     }
     
@@ -284,60 +285,26 @@ public class CropViewController: UIViewController {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        processPresetTransformation() { [weak self] transform in
-            guard let self = self else { return }
-            if case .alwaysUsingOnePresetFixedRatio(let ratio) = self.config.presetFixedRatioType {
-                self.cropView.aspectRatioLockEnabled = true
-                self.cropToolbar.handleFixedRatioSetted(ratio: ratio)
-                
-                if ratio == 0 {
-                    self.cropView.viewModel.aspectRatio = transform.maskFrame.width / transform.maskFrame.height
-                } else {
-                    self.cropView.viewModel.aspectRatio = CGFloat(ratio)
-                    self.cropView.setFixedRatioCropBox(zoom: false, cropBox: cropView.viewModel.cropBoxFrame)
-                }
-            }
-        }
+//        viewDidLayoutSubviews 타이밍 변경
+//        processPresetTransformation() { [weak self] transform in
+//            guard let self = self else { return }
+//            if case .alwaysUsingOnePresetFixedRatio(let ratio) = self.config.presetFixedRatioType {
+//                self.cropView.aspectRatioLockEnabled = true
+//                self.cropToolbar.handleFixedRatioSetted(ratio: ratio)
+//
+//                if ratio == 0 {
+//                    self.cropView.viewModel.aspectRatio = transform.maskFrame.width / transform.maskFrame.height
+//                } else {
+//                    self.cropView.viewModel.aspectRatio = CGFloat(ratio)
+//                    self.cropView.setFixedRatioCropBox(zoom: false, cropBox: cropView.viewModel.cropBoxFrame)
+//                }
+//            }
+//        }
     }
     
     private func getTransformInfo(byTransformInfo transformInfo: Transformation) -> Transformation {
         let cropFrame = cropView.viewModel.cropOrignFrame
         let contentBound = cropView.getContentBounds()
-        
-        let adjustScale: CGFloat
-        var maskFrameWidth: CGFloat
-        var maskFrameHeight: CGFloat
-        
-        if ( transformInfo.maskFrame.height / transformInfo.maskFrame.width >= contentBound.height / contentBound.width ) {
-            maskFrameHeight = contentBound.height
-            maskFrameWidth = transformInfo.maskFrame.width / transformInfo.maskFrame.height * maskFrameHeight
-            adjustScale = maskFrameHeight / transformInfo.maskFrame.height
-        } else {
-            maskFrameWidth = contentBound.width
-            maskFrameHeight = transformInfo.maskFrame.height / transformInfo.maskFrame.width * maskFrameWidth
-            adjustScale = maskFrameWidth / transformInfo.maskFrame.width
-        }
-        
-        var newTransform = transformInfo
-        
-        newTransform.offset = CGPoint(x:transformInfo.offset.x * adjustScale,
-                                      y:transformInfo.offset.y * adjustScale)
-        
-        newTransform.maskFrame = CGRect(x: cropFrame.origin.x + (cropFrame.width - maskFrameWidth) / 2,
-                                        y: cropFrame.origin.y + (cropFrame.height - maskFrameHeight) / 2,
-                                        width: maskFrameWidth,
-                                        height: maskFrameHeight)
-        newTransform.scrollBounds = CGRect(x: transformInfo.scrollBounds.origin.x * adjustScale,
-                                           y: transformInfo.scrollBounds.origin.y * adjustScale,
-                                           width: transformInfo.scrollBounds.width * adjustScale,
-                                           height: transformInfo.scrollBounds.height * adjustScale)
-        
-        return newTransform
-    }
-    
-    public func getdongdong(byTransformInfo transformInfo: Transformation) -> Transformation {
-        let cropFrame = cropView.viewModel.cropOrignFrame
-        let contentBound = cropView.getContentBounds(cropViewPadding: 0.00000001)
         
         let adjustScale: CGFloat
         var maskFrameWidth: CGFloat
@@ -588,16 +555,6 @@ extension CropViewController: CropToolbarDelegate {
     public func didSelectAlterCropper90Degree() {
         handleAlterCropper90Degree()
     }
-    
-    public func getCurrentTransformation() -> (Transformation, CropInfo) {
-        return cropView.getCurrentTransformationInfo()
-    }
-    
-    public func getPlease(completion: @escaping ()->Void) {
-        cropView.getPlease {
-            completion()
-        }
-    }
 }
 
 // API
@@ -619,8 +576,8 @@ extension CropViewController {
         return cropView.crop(image).croppedImage
     }
     
-    public func changeTranformation(info: Transformation) {
-        config.presetTransformationType = .presetInfo(info: info)
+    public func changeTranformation() {
+//        config.presetTransformationType = .presetInfo(info: info)
         processPresetTransformation() { [weak self] transform in
             guard let self = self else { return }
             if case .alwaysUsingOnePresetFixedRatio(let ratio) = self.config.presetFixedRatioType {
@@ -635,5 +592,40 @@ extension CropViewController {
                 }
             }
         }
+    }
+    
+    public func convertTransformInfo(byTransformInfo transformInfo: Transformation) -> Transformation {
+        let cropFrame = cropView.viewModel.cropOrignFrame
+        let contentBound = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        
+        let adjustScale: CGFloat
+        var maskFrameWidth: CGFloat
+        var maskFrameHeight: CGFloat
+        
+        if ( transformInfo.maskFrame.height / transformInfo.maskFrame.width >= contentBound.height / contentBound.width ) {
+            maskFrameHeight = contentBound.height
+            maskFrameWidth = transformInfo.maskFrame.width / transformInfo.maskFrame.height * maskFrameHeight
+            adjustScale = maskFrameHeight / transformInfo.maskFrame.height
+        } else {
+            maskFrameWidth = contentBound.width
+            maskFrameHeight = transformInfo.maskFrame.height / transformInfo.maskFrame.width * maskFrameWidth
+            adjustScale = maskFrameWidth / transformInfo.maskFrame.width
+        }
+        
+        var newTransform = transformInfo
+        
+        newTransform.offset = CGPoint(x:transformInfo.offset.x * adjustScale,
+                                      y:transformInfo.offset.y * adjustScale)
+        
+        newTransform.maskFrame = CGRect(x: cropFrame.origin.x + (cropFrame.width - maskFrameWidth) / 2,
+                                        y: cropFrame.origin.y + (cropFrame.height - maskFrameHeight) / 2,
+                                        width: maskFrameWidth,
+                                        height: maskFrameHeight)
+        newTransform.scrollBounds = CGRect(x: transformInfo.scrollBounds.origin.x * adjustScale,
+                                           y: transformInfo.scrollBounds.origin.y * adjustScale,
+                                           width: transformInfo.scrollBounds.width * adjustScale,
+                                           height: transformInfo.scrollBounds.height * adjustScale)
+        
+        return newTransform
     }
 }

@@ -82,10 +82,8 @@ extension EmbeddedCropViewController: CropViewControllerDelegate {
 //        self.didGetCroppedImage?(cropped)
         
 //        print(cropViewController.getCurrentTransformation())
-        cropViewController.getPlease {
-            print(cropViewController.getdongdong(byTransformInfo: transformation))
-        }
-        
+        print(cropViewController.convertTransformInfo(byTransformInfo: transformation))
+
     }
     
     func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) {

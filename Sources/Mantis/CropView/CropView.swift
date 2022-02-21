@@ -788,33 +788,3 @@ extension CropView {
         }
     }
 }
-
-
-// MARK: - public API
-extension CropView {
-    func getCurrentTransformationInfo() -> (Transformation, CropInfo) {
-        let transformation = Transformation(
-            offset: scrollView.contentOffset,
-            rotation: getTotalRadians(),
-            scale: scrollView.zoomScale,
-            manualZoomed: manualZoomed,
-            intialMaskFrame: getInitialCropBoxRect(),
-            maskFrame: gridOverlayView.frame,
-            scrollBounds: scrollView.bounds
-        )
-        return (transformation, getCropInfo())
-    }
-    
-    func getPlease(completion: @escaping ()->Void) {
-        gridOverlayView.handleEdgeUntouched()
-        let contentRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-        adjustUIForNewCrop(contentRect: contentRect, animation: false) {[weak self] in
-            self?.delegate?.cropViewDidEndResize(self!)
-            self?.viewModel.setBetweenOperationStatus()
-            self?.scrollView.updateMinZoomScale()
-            
-            completion()
-        }
-    }
-}
-
