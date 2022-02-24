@@ -576,7 +576,7 @@ extension CropViewController {
         return cropView.crop(image).croppedImage
     }
     
-    public func changeTranformation() {
+    public func changeTranformation() { 
 //        config.presetTransformationType = .presetInfo(info: info)
         processPresetTransformation() { [weak self] transform in
             guard let self = self else { return }
