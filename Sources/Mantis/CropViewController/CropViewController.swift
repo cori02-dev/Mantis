@@ -596,6 +596,10 @@ extension CropViewController {
         }
     }
     
+    public func getCurrentTransformationInfo() -> Transformation {
+        return cropView.getTransformationInfo()
+    }
+    
     public func convertTransformInfo(byTransformInfo transformInfo: Transformation) -> Transformation {
         let cropFrame = cropView.viewModel.cropOrignFrame
         let contentBound = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)

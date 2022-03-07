@@ -628,7 +628,18 @@ extension CropView {
             cropSize: gridOverlayView.frame.size,
             imageViewSize: imageContainer.bounds.size
         )
-        
+    }
+    
+    func getTransformationInfo() -> Transformation {
+        return Transformation(
+            offset: scrollView.contentOffset,
+            rotation: getTotalRadians(),
+            scale: scrollView.zoomScale,
+            manualZoomed: manualZoomed,
+            intialMaskFrame: getInitialCropBoxRect(),
+            maskFrame: gridOverlayView.frame,
+            scrollBounds: scrollView.bounds
+        )
     }
     
     func getTotalRadians() -> CGFloat {
