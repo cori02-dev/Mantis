@@ -11,6 +11,8 @@ import Mantis
 
 class ViewController: UIViewController, CropViewControllerDelegate {
     var image = UIImage(named: "sunflower.jpg")
+    var preTrans: Transformation?
+    var preCropInfo: CropInfo?
     
     @IBOutlet weak var croppedImageView: UIImageView!
     var imagePicker: ImagePicker!
@@ -237,9 +239,13 @@ class ViewController: UIViewController, CropViewControllerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let navigationController = segue.destination as? UINavigationController,
            let embeddedCropViewController = navigationController.viewControllers.first as? EmbeddedCropViewController {
-            embeddedCropViewController.image = UIImage(named: "zoomfor")
-            embeddedCropViewController.didGetCroppedImage = {[weak self] image in
-                self?.croppedImageView.image = UIImage(named: "zoomfor")
+            embeddedCropViewController.image = self.image
+            embeddedCropViewController.preTrans = self.preTrans
+            embeddedCropViewController.preCropInfo = self.preCropInfo
+            embeddedCropViewController.didGetCroppedImage = {[weak self] (image, trans, cropInfo) in
+                self?.preTrans = trans
+                self?.preCropInfo = cropInfo
+                self?.croppedImageView.image = image
                 self?.dismiss(animated: true)
             }
         }

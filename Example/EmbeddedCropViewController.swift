@@ -12,9 +12,11 @@ import Mantis
 class EmbeddedCropViewController: UIViewController {
     
     var image: UIImage?
+    var preTrans: Transformation?
+    var preCropInfo: CropInfo?
     var cropViewController: CropViewController?
     
-    var didGetCroppedImage: ((UIImage) -> Void)?
+    var didGetCroppedImage: ((UIImage, Transformation, CropInfo) -> Void)?
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
@@ -43,21 +45,31 @@ class EmbeddedCropViewController: UIViewController {
             cropViewController.delegate = self
             
             var config = Mantis.Config()
-            config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1/1)
-            config.showCropToolbar = false
+            config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
+            config.showCropToolbar = true
             config.showRotationDial = false
             config.cropVisualEffectType = .light
             
             
-//            let transform = Transformation(offset: CGPoint(x: 281.3333333333333, y: 329.3333333333333),
-//                                           rotation: 0.0,
-//                                           scale: 3.077653316242954,
-//                                           manualZoomed: true,
-//                                           intialMaskFrame: CGRect(x: 74.33333333333331, y: 14.0, width: 241.33333333333337, height: 362.0),
-//                                           maskFrame: CGRect(x: 14.0, y: 14.0, width: 362.0, height: 362.0),
-//                                           scrollBounds: CGRect(x: 281.3333333333333, y: 329.3333333333333, width: 362.0, height: 362.0))
+            if let pre = preTrans {
+                config.presetTransformationType = .presetInfo(info: pre)
+            }
+            
+            
+//            let transform = Transformation(offset: CGPoint(x: 0.0, y: 79.66666666666667),
+//                                           rotation: -1.5707963267948966,
+//                                           scale: 1.5,
+//                                           manualZoomed: false,
+//                                           intialMaskFrame: CGRect(x: 14.0, y: 57.33333333333334, width: 347.0, height: 231.33333333333331),
+//                                           maskFrame: CGRect(x: 28.5, y: 14.0, width: 318.0, height: 318.0),
+//                                           scrollBounds: CGRect(x: 0.0, y: 79.66666666666667, width: 318, height: 318))
 //
 //            config.presetTransformationType = .presetInfo(info: transform)
+            
+//            if let pre = preCropInfo {
+//                config.presetTransformationType = .presetNormalizedInfo(normailizedInfo: CGRect(x: 0.0, y: 79.66666666666667, width: 318, height: 318))
+//            }
+            
             
             cropViewController.config = config
             
@@ -78,9 +90,10 @@ extension EmbeddedCropViewController: CropViewControllerDelegate {
                                    cropped: UIImage,
                                    transformation: Transformation,
                                    cropInfo: CropInfo) {
-//        self.dismiss(animated: true)
-//        self.didGetCroppedImage?(cropped)
+        self.dismiss(animated: true)
+        self.didGetCroppedImage?(cropped, transformation, cropInfo)
         
+        print(transformation)
 //        print(cropViewController.getCurrentTransformation())
         print(cropViewController.convertTransformInfo(byTransformInfo: transformation))
 

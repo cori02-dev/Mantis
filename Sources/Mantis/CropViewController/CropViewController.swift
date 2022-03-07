@@ -271,9 +271,11 @@ public class CropViewController: UIViewController {
             cropView.transform(byTransformInfo: newTransform, rotateDial: false)
             
             // The second transform is for adjusting the scale of transformInfo
-            let adjustScale = (cropView.viewModel.cropBoxFrame.width / cropView.viewModel.cropOrignFrame.width) / (transformInfo.maskFrame.width / transformInfo.intialMaskFrame.width)
-            newTransform.scale *= adjustScale
-            cropView.transform(byTransformInfo: newTransform)
+            if newTransform.manualZoomed {
+                let adjustScale = (cropView.viewModel.cropBoxFrame.width / cropView.viewModel.cropOrignFrame.width) / (transformInfo.maskFrame.width / transformInfo.intialMaskFrame.width)
+                newTransform.scale *= adjustScale
+                cropView.transform(byTransformInfo: newTransform)
+            }
             completion(transformInfo)
         } else if case .presetNormalizedInfo(let normailizedInfo) = config.presetTransformationType {
             let transformInfo = getTransformInfo(byNormalizedInfo: normailizedInfo);

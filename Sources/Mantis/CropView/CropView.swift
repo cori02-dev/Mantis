@@ -34,7 +34,7 @@ protocol CropViewDelegate: AnyObject {
 let cropViewMinimumBoxSize: CGFloat = 42
 let minimumAspectRatio: CGFloat = 0
 let hotAreaUnit: CGFloat = 32
-var cropViewPadding:CGFloat = 0.00000000001
+let cropViewPadding:CGFloat = 14.0
 
 class CropView: UIView {
 
