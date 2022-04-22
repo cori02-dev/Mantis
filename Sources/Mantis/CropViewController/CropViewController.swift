@@ -431,9 +431,9 @@ public class CropViewController: UIViewController {
     }
     
     private func handleMirror() {
-        self.cropView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        let newX = self.cropView.scrollView.contentSize.width - self.cropView.scrollView.contentOffset.x - UIScreen.main.bounds.width
         cropView.mirrorChange()
-        
+        self.cropView.scrollView.setContentOffset(CGPoint(x: newX, y: self.cropView.scrollView.contentOffset.y), animated: false)
     }
     
     private func handleAlterCropper90Degree() {
