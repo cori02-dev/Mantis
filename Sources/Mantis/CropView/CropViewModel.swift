@@ -142,10 +142,10 @@ class CropViewModel: NSObject {
         return GeometryHelper.getCropEdge(forPoint: point, byTouchRect: touchRect, hotAreaUnit: hotAreaUnit)
     }
     
-    func getNewCropBoxFrame(with point: CGPoint, and contentFrame: CGRect, aspectRatioLockEnabled: Bool) -> CGRect {
+    func getNewCropBoxFrame(with point: CGPoint, and contentFrame: CGRect, padding: CGFloat, aspectRatioLockEnabled: Bool) -> CGRect {
         var point = point
-        point.x = max(contentFrame.origin.x - cropViewPadding, point.x)
-        point.y = max(contentFrame.origin.y - cropViewPadding, point.y)
+        point.x = max(contentFrame.origin.x - padding, point.x)
+        point.y = max(contentFrame.origin.y - padding, point.y)
         
         //The delta between where we first tapped, and where our finger is now
         let xDelta = ceil(point.x - panOriginPoint.x)

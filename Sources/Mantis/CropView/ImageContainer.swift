@@ -30,6 +30,10 @@ class ImageContainer: UIView {
         }
     }
     
+    var currentImageViewImage: UIImage? {
+        return imageView.image
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = bounds

@@ -18,6 +18,11 @@
 		5FC10B2A217A9EE100582874 /* MantisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC10B29217A9EE100582874 /* MantisTests.swift */; };
 		5FD045EA245619D400B9D3D2 /* CustomizedCropToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD045E9245619D400B9D3D2 /* CustomizedCropToolbar.swift */; };
 		5FEBA88221961E4A0018DE62 /* EmbeddedCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA88121961E4A0018DE62 /* EmbeddedCropViewController.swift */; };
+		B71909A32810F2D9008D61CD /* Inchworm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719099E2810F2D9008D61CD /* Inchworm.swift */; };
+		B71909A42810F2D9008D61CD /* ProcessIndicatorContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B719099F2810F2D9008D61CD /* ProcessIndicatorContainer.swift */; };
+		B71909A52810F2D9008D61CD /* SlideRuler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71909A02810F2D9008D61CD /* SlideRuler.swift */; };
+		B71909A62810F2D9008D61CD /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71909A12810F2D9008D61CD /* Slider.swift */; };
+		B71909A72810F2D9008D61CD /* ProcessIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71909A22810F2D9008D61CD /* ProcessIndicatorView.swift */; };
 		CCBF2F602525B3050081B8FE /* CustomizedCropToolbarWithoutList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBF2F5F2525B3050081B8FE /* CustomizedCropToolbarWithoutList.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +59,11 @@
 		89C5370690AB91AB238B90E9 /* Pods-MantisExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MantisExample.release.xcconfig"; path = "Target Support Files/Pods-MantisExample/Pods-MantisExample.release.xcconfig"; sourceTree = "<group>"; };
 		9326C1CDF121300C5CAAE2BE /* Pods-MantisExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MantisExample.debug.xcconfig"; path = "Target Support Files/Pods-MantisExample/Pods-MantisExample.debug.xcconfig"; sourceTree = "<group>"; };
 		B100014666B3974EEDE05B0C /* Pods_MantisExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MantisExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B719099E2810F2D9008D61CD /* Inchworm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inchworm.swift; sourceTree = "<group>"; };
+		B719099F2810F2D9008D61CD /* ProcessIndicatorContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessIndicatorContainer.swift; sourceTree = "<group>"; };
+		B71909A02810F2D9008D61CD /* SlideRuler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideRuler.swift; sourceTree = "<group>"; };
+		B71909A12810F2D9008D61CD /* Slider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		B71909A22810F2D9008D61CD /* ProcessIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessIndicatorView.swift; sourceTree = "<group>"; };
 		CCBF2F5F2525B3050081B8FE /* CustomizedCropToolbarWithoutList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizedCropToolbarWithoutList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +99,7 @@
 		5FC10B08217A9EDF00582874 = {
 			isa = PBXGroup;
 			children = (
+				B719099D2810F2D9008D61CD /* Source */,
 				5F90A3CA23DCEBE800D9F27E /* MantisExample.entitlements */,
 				5F0852B4237918510031B75D /* ImagePicker.swift */,
 				5FC10B14217A9EDF00582874 /* AppDelegate.swift */,
@@ -134,6 +145,18 @@
 				61C386518C3C25E57F8C83A5 /* Pods-MantisExampleTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B719099D2810F2D9008D61CD /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				B719099E2810F2D9008D61CD /* Inchworm.swift */,
+				B719099F2810F2D9008D61CD /* ProcessIndicatorContainer.swift */,
+				B71909A02810F2D9008D61CD /* SlideRuler.swift */,
+				B71909A12810F2D9008D61CD /* Slider.swift */,
+				B71909A22810F2D9008D61CD /* ProcessIndicatorView.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,9 +331,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FD045EA245619D400B9D3D2 /* CustomizedCropToolbar.swift in Sources */,
+				B71909A72810F2D9008D61CD /* ProcessIndicatorView.swift in Sources */,
+				B71909A42810F2D9008D61CD /* ProcessIndicatorContainer.swift in Sources */,
+				B71909A32810F2D9008D61CD /* Inchworm.swift in Sources */,
 				5FC10B17217A9EDF00582874 /* ViewController.swift in Sources */,
+				B71909A62810F2D9008D61CD /* Slider.swift in Sources */,
 				5F0852B5237918510031B75D /* ImagePicker.swift in Sources */,
 				CCBF2F602525B3050081B8FE /* CustomizedCropToolbarWithoutList.swift in Sources */,
+				B71909A52810F2D9008D61CD /* SlideRuler.swift in Sources */,
 				5FEBA88221961E4A0018DE62 /* EmbeddedCropViewController.swift in Sources */,
 				5FC10B15217A9EDF00582874 /* AppDelegate.swift in Sources */,
 			);

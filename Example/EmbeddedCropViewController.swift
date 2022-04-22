@@ -28,6 +28,18 @@ class EmbeddedCropViewController: UIViewController {
         cancelButton.title = "Cancel"
         doneButton.title = "Done"
         resolutionLabel.text = "\(getResolution(image: image) ?? "unknown")"
+        
+        let model1 = ProcessIndicatorModel(limitNumber: 45,
+                                           normalIconImage: UIImage(named: "")?.cgImage,
+                                           dimmedIconImage: UIImage(named: "")?.cgImage)
+        let config = Config()
+        config.indicatorSpan = 0
+        config.forceAlignCenterFeedback = false
+        let slider = createSlider(config: config, frame: CGRect(x: 0, y: UIScreen.main.bounds.height-250, width: UIScreen.main.bounds.width, height: 80), processIndicatorModels: [model1], activeIndex: 0)
+        slider.backgroundColor = .black
+        slider.delegate = self
+        
+        self.view.addSubview(slider)
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -38,6 +50,15 @@ class EmbeddedCropViewController: UIViewController {
         cropViewController?.crop()
     }
     
+    @IBAction func rotateClicked(_ sender: Any) {
+        cropViewController?.didSelectClockwiseRotate()
+    }
+    
+    @IBAction func mirrorClicked(_ sender: Any) {
+        cropViewController?.didSelectMirrorImage()
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cropViewController = segue.destination as? CropViewController {
             cropViewController.image = image
@@ -45,11 +66,11 @@ class EmbeddedCropViewController: UIViewController {
             cropViewController.delegate = self
             
             var config = Mantis.Config()
+            config.padding = 0.1
             config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
-            config.showCropToolbar = true
+            config.showCropToolbar = false
             config.showRotationDial = false
             config.cropVisualEffectType = .light
-            
             
             if let pre = preTrans {
                 config.presetTransformationType = .presetInfo(info: pre)
@@ -82,6 +103,15 @@ class EmbeddedCropViewController: UIViewController {
             return "\(Int(size.width)) x \(Int(size.height)) pixels"
         }
         return nil
+    }
+}
+
+extension EmbeddedCropViewController: SliderDelegate {
+    func didGetOffsetRatio(_ slider: Slider, activeIndicatorIndex: Int, offsetRatio: Float) {
+        print("No \(activeIndicatorIndex) indicator has a offset(\(offsetRatio*10))")
+        print(Int(offsetRatio * Float(45)))
+        let degree = Int(offsetRatio * Float(45))
+        self.cropViewController?.didRotationDialog(CGFloat(degree))
     }
 }
 

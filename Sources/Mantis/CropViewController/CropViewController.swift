@@ -251,6 +251,7 @@ public class CropViewController: UIViewController {
         if !config.showRotationDial {
             cropView.angleDashboardHeight = 0
         }
+        cropView.padding = config.padding
         cropView.delegate = self
         cropView.clipsToBounds = true
         cropView.cropShapeType = config.cropShapeType
@@ -306,7 +307,7 @@ public class CropViewController: UIViewController {
     
     private func getTransformInfo(byTransformInfo transformInfo: Transformation) -> Transformation {
         let cropFrame = cropView.viewModel.cropOrignFrame
-        let contentBound = cropView.getContentBounds()
+        let contentBound = cropView.getContentBounds(cropViewPadding: cropView.padding)
         
         let adjustScale: CGFloat
         var maskFrameWidth: CGFloat
@@ -426,6 +427,12 @@ public class CropViewController: UIViewController {
                 self?.ratioSelector?.update(fixedRatioManager: self?.getFixedRatioManager())
             }
         }
+        
+    }
+    
+    private func handleMirror() {
+        self.cropView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        cropView.mirrorChange()
         
     }
     
@@ -633,5 +640,13 @@ extension CropViewController {
                                            height: transformInfo.scrollBounds.height * adjustScale)
         
         return newTransform
+    }
+    
+    public func didSelectMirrorImage() {
+        handleMirror()
+    }
+    
+    public func didRotationDialog(_ degree: CGFloat) {
+        cropView.didRotation(byRadians: degree)
     }
 }
