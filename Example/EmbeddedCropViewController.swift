@@ -70,6 +70,7 @@ class EmbeddedCropViewController: UIViewController {
             config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
             config.showCropToolbar = false
             config.showRotationDial = false
+            config.isHiddenOverlayView = true
             config.cropVisualEffectType = .light
             
             if let pre = preTrans {

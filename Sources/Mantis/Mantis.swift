@@ -177,6 +177,7 @@ public struct Config {
     public var presetFixedRatioType: PresetFixedRatioType = .canUseMultiplePresetFixedRatio()
     public var showRotationDial = true
     public var showCropToolbar = true
+    public var isHiddenOverlayView = false
     public var padding: CGFloat = 14.0
     public var dialConfig = DialConfig()
     public var cropToolbarConfig = CropToolbarConfig()

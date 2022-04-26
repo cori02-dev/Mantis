@@ -251,6 +251,9 @@ public class CropViewController: UIViewController {
         if !config.showRotationDial {
             cropView.angleDashboardHeight = 0
         }
+        if config.isHiddenOverlayView {
+            cropView.gridOverlayView.removeFromSuperview()
+        }
         cropView.padding = config.padding
         cropView.delegate = self
         cropView.clipsToBounds = true
