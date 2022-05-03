@@ -45,12 +45,15 @@ class CropView: UIView {
     var angleDashboardHeight: CGFloat = 60
     var padding:CGFloat = 0.0001
     
+    var originImage: UIImage?
     var image: UIImage {
         didSet {
             imageContainer.image = image
         }
     }
     let viewModel: CropViewModel
+    
+    var rotationCount: Int = 0
     
     weak var delegate: CropViewDelegate? {
         didSet {
@@ -81,6 +84,7 @@ class CropView: UIView {
     }
     
     init(image: UIImage, viewModel: CropViewModel = CropViewModel(), dialConfig: DialConfig = Mantis.Config().dialConfig) {
+        self.originImage = image
         self.image = image
         self.viewModel = viewModel
         self.dialConfig = dialConfig
@@ -679,21 +683,80 @@ extension CropView {
     }
     
     func mirrorChange() {
-        if let newImage = imageContainer.currentImageViewImage?.withHorizontallyFlippedOrientation() {
-            UIView.transition(with: scrollView,
-                              duration: 0.35,
-                              options: UIView.AnimationOptions.transitionFlipFromLeft,
-                              animations: { [weak self] in
-                self?.imageContainer.image = newImage
-            }, completion: { _ in
-                
-            })
+
+        if rotationCount == 0 || rotationCount == 2 {
+            if let newImage = imageContainer.currentImageViewImage?.withHorizontallyFlippedOrientation() {
+//                print(newImage.imageOrientation.rawValue)
+                UIView.transition(with: scrollView,
+                                  duration: 0.35,
+                                  options: UIView.AnimationOptions.transitionFlipFromLeft,
+                                  animations: { [weak self] in
+                    self?.imageContainer.image = newImage
+                }, completion: { _ in
+                    
+                })
+            }
+        } else {
+            
+            if imageContainer.currentImageViewImage?.imageOrientation == .up {
+                if let cgImage = originImage?.cgImage {
+                    let newImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: .downMirrored)
+                    UIView.transition(with: scrollView,
+                                      duration: 0.35,
+                                      options: UIView.AnimationOptions.transitionFlipFromLeft,
+                                      animations: { [weak self] in
+                        self?.imageContainer.image = newImage
+                    }, completion: { _ in
+
+                    })
+                }
+            } else if imageContainer.currentImageViewImage?.imageOrientation == .downMirrored {
+                if let cgImage = originImage?.cgImage {
+                    let newImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: .up)
+                    UIView.transition(with: scrollView,
+                                      duration: 0.35,
+                                      options: UIView.AnimationOptions.transitionFlipFromLeft,
+                                      animations: { [weak self] in
+                        self?.imageContainer.image = newImage
+                    }, completion: { _ in
+
+                    })
+                }
+            } else if imageContainer.currentImageViewImage?.imageOrientation == .upMirrored {
+                if let cgImage = originImage?.cgImage {
+                    let newImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: .down)
+                    UIView.transition(with: scrollView,
+                                      duration: 0.35,
+                                      options: UIView.AnimationOptions.transitionFlipFromLeft,
+                                      animations: { [weak self] in
+                        self?.imageContainer.image = newImage
+                    }, completion: { _ in
+
+                    })
+                }
+            } else if imageContainer.currentImageViewImage?.imageOrientation == .down {
+                if let cgImage = originImage?.cgImage {
+                    let newImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: .upMirrored)
+                    UIView.transition(with: scrollView,
+                                      duration: 0.35,
+                                      options: UIView.AnimationOptions.transitionFlipFromLeft,
+                                      animations: { [weak self] in
+                        self?.imageContainer.image = newImage
+                    }, completion: { _ in
+
+                    })
+                }
+            }
+            
         }
+        
     }
     
     func rotateBy90(rotateAngle: CGFloat, completion: @escaping ()->Void = {}) {
         viewModel.setDegree90RotatingStatus()
         let rorateDuration = 0.25
+        rotationCount += 1
+        if rotationCount == 4 { rotationCount = 0 }
         
         if forceFixedRatio {
             viewModel.setRotatingStatus(by: CGAngle(radians: viewModel.radians))

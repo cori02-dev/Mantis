@@ -15,7 +15,7 @@ class EmbeddedCropViewController: UIViewController {
     var preTrans: Transformation?
     var preCropInfo: CropInfo?
     var cropViewController: CropViewController?
-    
+    var currentSliderDegree: CGFloat = 0
     var didGetCroppedImage: ((UIImage, Transformation, CropInfo) -> Void)?
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
@@ -112,6 +112,7 @@ extension EmbeddedCropViewController: SliderDelegate {
         print("No \(activeIndicatorIndex) indicator has a offset(\(offsetRatio*10))")
         print(Int(offsetRatio * Float(45)))
         let degree = Int(offsetRatio * Float(45))
+        self.currentSliderDegree = CGFloat(degree)
         self.cropViewController?.didRotationDialog(CGFloat(degree))
     }
 }
